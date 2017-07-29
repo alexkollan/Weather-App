@@ -6,7 +6,7 @@
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ' crossorigin='anonymous'>
-    <link href='css/style.css' rel='stylesheet'>
+    <link href='css/css.css' rel='stylesheet'>
 </head>
 
 <body>
@@ -20,27 +20,25 @@
 
         <div id='maincontainer' class='container borderit align-middle'>
             <div id="geocode" class='geocode'>test</div>
-            <img id='wicon' class='wicon' src=''></img>
+            <canvas id="el" width="64" height="64"></canvas>
 
             <div id='weatherStatus' class='weatherStatus'></div>
-            <div id='temp' class='temp'></div>
+            <div id='temp' class='temp' value=''></div>
+            <div id='wind' class='wind' value=''></div>
             <div id='pressure' class='pressure'></div>
             <div id='humidity' class='humidity'></div>
-            <div><input id='inputf' class='inputf' type="text" name="firstname" value="Enter City Name"><br></div>
+            <div><input id='inputf' placeholder="Enter City Name" class='inputf' type="text" name="firstname"><br></div>
             <button id='searchbtn' type="button">Search</button>
-
+            <button id='convert' type="button">convert</button>
         </div>
 
     </div>
 
-
-
-
-
-
     <script async src="https://www.youtube.com/iframe_api"></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
     <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js' integrity='sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn' crossorigin='anonymous'></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC89vZacLzYOG4xGOt1ujzc4MhkDq9V4jo&libraries=places,geometry"></script>
+     <script src='https://darkskyapp.github.io/skycons/skycons.js'></script> 
     <script src='js/main.js'></script>
 </body>
 

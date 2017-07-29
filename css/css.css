@@ -3,9 +3,14 @@ body {
     /* background: black; */
     color: black;
     font-family: 'Bree Serif', serif;
-    font-size: 3em;
+    font-size: 2em;
 }
-
+.allTemp{
+     display: flex;
+}
+    .temp{
+        justify-content: space-between;
+    }
 .borderit {
     border: 2px solid white;
 }
