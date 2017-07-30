@@ -39,7 +39,7 @@ $(function () {
         console.log(position.coords.latitude);
         console.log(position.coords.longitude);
         getWeather(position.coords.latitude, position.coords.longitude);
-
+        getCityName(position.coords.latitude,position.coords.longitude);
     }
 
     function err(error) {
@@ -76,6 +76,7 @@ $('#searchbtn').on('click', function () {
             let lat = data.results[0].geometry.location.lat;
             let lon = data.results[0].geometry.location.lng;
             getWeather(lat, lon);
+            getCityName(lat, lon);
         }
     })
 })
@@ -130,17 +131,17 @@ function getWeather(lat, lon) {
                 data.currently.windSpeed
             ];
             console.log('Call succesful.');
-            updateValues(cw[0], cw[1], toCelsius(cw[2]), cw[3], cw[4], cw[5], cw[6]);
+            updateValues(cw[1], toCelsius(cw[2]), cw[3], cw[4], cw[5], cw[6]);
         }
     })
 
 }
 
-function updateValues(n, s, t, p, h, i, w) {
+function updateValues(s, t, p, h, i, w) {
     let b;
 
     console.log('Updating values...');
-    $('#geocode').html(n.replace(/(.*)\//g, ''));
+    
     // let wiconID = i + '.png';
     // $('#wicon').attr('src', weatherIcon + wiconID);
     $('#weatherStatus').html('Weather: ' + s);
@@ -244,6 +245,24 @@ function loadIcons() {
         i;
     for (i=0; i < list.length; i++){
         icons.set(list[i], list[i]);
+        icons.play();
     }
-    icons.play();
 }
+function getCityName(lat, lng){
+    var res;
+    console.log('STARTING API');
+     $.ajax({
+        type: 'GET',
+        dataType: "json",
+        url: "http://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&sensor=false",
+        success: function(data) {
+            console.log(data);
+            console.log(data.results[1].formatted_address);
+            res = [data.results[0].address_components[3].long_name];
+            $('#geocode').html(res[0]);
+        },
+        error: function () { console.log('error'); } 
+    }); 
+}
+
+
