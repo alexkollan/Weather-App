@@ -5,12 +5,15 @@ body {
     font-family: 'Bree Serif', serif;
     font-size: 2em;
 }
-.allTemp{
-     display: flex;
+
+.allTemp {
+    display: flex;
 }
-    .temp{
-        justify-content: space-between;
-    }
+
+.temp {
+    justify-content: space-between;
+}
+
 .borderit {
     border: 2px solid white;
 }

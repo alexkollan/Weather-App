@@ -19,18 +19,14 @@ const snowimg = 'http://res.cloudinary.com/dtmkqsnpm/image/upload/v1501257195/sn
 const fogimg = 'http://res.cloudinary.com/dtmkqsnpm/image/upload/v1501257293/foggy-2091573_1920_qdv2j9.jpg';
 
 $(function () {
-    // getLocationAndWeather();
-
     getLocation();
 
     function getLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(pos, err);
             console.log('Navigator is available!');
-
         } else {
             console.log('Geolocation is not supported by this browser.');
-
         }
     }
 
@@ -39,7 +35,7 @@ $(function () {
         console.log(position.coords.latitude);
         console.log(position.coords.longitude);
         getWeather(position.coords.latitude, position.coords.longitude);
-        getCityName(position.coords.latitude,position.coords.longitude);
+        getCityName(position.coords.latitude, position.coords.longitude);
     }
 
     function err(error) {
@@ -58,7 +54,6 @@ $(function () {
                 break;
         }
     };
-    
 })
 
 
@@ -86,9 +81,12 @@ function toCelsius(f) {
     return Math.round((f - 32) / 1.8);
 }
 
+
 function toFahrenheit(c) {
     return Math.round((c * 1.8) + 32);
 }
+
+
 var currentMetric = 'c';
 
 $('#convert').on('click', function () {
@@ -134,21 +132,16 @@ function getWeather(lat, lon) {
             updateValues(cw[1], toCelsius(cw[2]), cw[3], cw[4], cw[5], cw[6]);
         }
     })
-
 }
+
 
 function updateValues(s, t, p, h, i, w) {
     let b;
-
     console.log('Updating values...');
-    
-    // let wiconID = i + '.png';
-    // $('#wicon').attr('src', weatherIcon + wiconID);
     $('#weatherStatus').html('Weather: ' + s);
     $('#temp').html('Temperature: ' + t + ' Celcius');
     $('#pressure').html('Pressure: ' + p + ' Hectopascals');
     $('#humidity').html('Humidity: ' + h + '%');
-    // $('#wind').html('Wind: ' + w + ' Beaufort');
     console.log(typeof (w) + w);
     switch (true) {
         case w >= 0 && w <= 0.3:
@@ -231,8 +224,8 @@ function updateValues(s, t, p, h, i, w) {
     }
     loadIcons();
     console.log('Update succesful.');
-
 }
+
 
 function loadIcons() {
     console.log('Loading Dark Sky Icons');
@@ -243,26 +236,28 @@ function loadIcons() {
             "fog"
         ],
         i;
-    for (i=0; i < list.length; i++){
+    for (i = 0; i < list.length; i++) {
         icons.set(list[i], list[i]);
         icons.play();
     }
 }
-function getCityName(lat, lng){
+
+
+function getCityName(lat, lng) {
     var res;
     console.log('STARTING API');
-     $.ajax({
+    $.ajax({
         type: 'GET',
         dataType: "json",
-        url: "http://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&sensor=false",
-        success: function(data) {
+        url: "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&sensor=false",
+        success: function (data) {
             console.log(data);
             console.log(data.results[1].formatted_address);
             res = [data.results[0].address_components[3].long_name];
             $('#geocode').html(res[0]);
         },
-        error: function () { console.log('error'); } 
-    }); 
+        error: function () {
+            console.log('error');
+        }
+    });
 }
-
-
