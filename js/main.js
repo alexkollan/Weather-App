@@ -58,6 +58,7 @@ $(function () {
                 break;
         }
     };
+    
 })
 
 
@@ -108,20 +109,6 @@ $('#convert').on('click', function () {
     }
 })
 
-function loadIcon() {
-    console.log('Loading Dark Sky Icons');
-    var icons = new Skycons(),
-        list = [
-            "clear-day", "clear-night", "partly-cloudy-day",
-            "partly-cloudy-night", "cloudy", "rain", "sleet", "snow", "wind",
-            "fog"
-        ],
-        i;
-    for (i = list.length; i--;)
-        icons.set(list[i], list[i]);
-    icons.play();
-    console.log('Icon load successful');
-}
 
 function getWeather(lat, lon) {
     console.log('Attempting to call the Dark Sky API...');
@@ -131,15 +118,15 @@ function getWeather(lat, lon) {
         dataType: 'json',
         success: function (data) {
             console.log(data);
-            let wicon = data.currently.icon;
+            // let wicon = data.currently.icon;
             let cityName = data.timezone;
             let cw = [
-                cityName, 
-                data.currently.summary, 
-                data.currently.apparentTemperature, 
-                data.currently.pressure, 
-                Math.round(data.currently.humidity * 100), 
-                data.currently.icon, 
+                cityName,
+                data.currently.summary,
+                data.currently.apparentTemperature,
+                data.currently.pressure,
+                Math.round(data.currently.humidity * 100),
+                data.currently.icon,
                 data.currently.windSpeed
             ];
             console.log('Call succesful.');
@@ -151,6 +138,7 @@ function getWeather(lat, lon) {
 
 function updateValues(n, s, t, p, h, i, w) {
     let b;
+
     console.log('Updating values...');
     $('#geocode').html(n.replace(/(.*)\//g, ''));
     // let wiconID = i + '.png';
@@ -160,46 +148,46 @@ function updateValues(n, s, t, p, h, i, w) {
     $('#pressure').html('Pressure: ' + p + ' Hectopascals');
     $('#humidity').html('Humidity: ' + h + '%');
     // $('#wind').html('Wind: ' + w + ' Beaufort');
-    console.log(typeof(w) + w);
+    console.log(typeof (w) + w);
     switch (true) {
-        case w>=0 && w<=0.3:
-        b = 0;
+        case w >= 0 && w <= 0.3:
+            b = 0;
             break;
-        case w>=0.4 && w<=1.5:
-        b = 1;
+        case w >= 0.4 && w <= 1.5:
+            b = 1;
             break;
-        case w>=1.6 && w<=3.3:
-        b = 2;
+        case w >= 1.6 && w <= 3.3:
+            b = 2;
             break;
-        case w>=3.4 && w<=5.5:
-        b = 3;
+        case w >= 3.4 && w <= 5.5:
+            b = 3;
             break;
-        case w>=5.6 && w<=7.9:
-        b = 4;
+        case w >= 5.6 && w <= 7.9:
+            b = 4;
             break;
-        case w>=8 && w<=10.7:
-        b = 5;
+        case w >= 8 && w <= 10.7:
+            b = 5;
             break;
-        case w>=10.8 && w<=13.8:
-        b = 6;
+        case w >= 10.8 && w <= 13.8:
+            b = 6;
             break;
-        case w>=13.9 && w<=17.1:
-        b = 7;
+        case w >= 13.9 && w <= 17.1:
+            b = 7;
             break;
-        case w>=17.2 && w<=20.7:
-        b = 8;
+        case w >= 17.2 && w <= 20.7:
+            b = 8;
             break;
-        case w>=20.8 && w<=24.4:
-        b = 9;
+        case w >= 20.8 && w <= 24.4:
+            b = 9;
             break;
-        case w>=24.5 && w<=28.4:
-        b = 10;
+        case w >= 24.5 && w <= 28.4:
+            b = 10;
             break;
-        case w>=28.5 && w<=32.6:
-        b = 11;
+        case w >= 28.5 && w <= 32.6:
+            b = 11;
             break;
         default:
-        b = 12;
+            b = 12;
             break;
     }
     $('#wind').html('Wind: ' + b + ' Beaufort');
@@ -240,6 +228,22 @@ function updateValues(n, s, t, p, h, i, w) {
         default:
             break;
     }
-    loadIcon();
+    loadIcons();
     console.log('Update succesful.');
+
+}
+
+function loadIcons() {
+    console.log('Loading Dark Sky Icons');
+    var icons = new Skycons(),
+        list = [
+            "clear-day", "clear-night", "partly-cloudy-day",
+            "partly-cloudy-night", "cloudy", "rain", "sleet", "snow", "wind",
+            "fog"
+        ],
+        i;
+    for (i=0; i < list.length; i++){
+        icons.set(list[i], list[i]);
+    }
+    icons.play();
 }
