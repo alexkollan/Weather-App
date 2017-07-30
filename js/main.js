@@ -19,15 +19,11 @@ const snowimg = 'http://res.cloudinary.com/dtmkqsnpm/image/upload/v1501257195/sn
 const fogimg = 'http://res.cloudinary.com/dtmkqsnpm/image/upload/v1501257293/foggy-2091573_1920_qdv2j9.jpg';
 
 $(function () {
-    getLocation();
-
-    function getLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(pos, err);
-            console.log('Navigator is available!');
-        } else {
-            console.log('Geolocation is not supported by this browser.');
-        }
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(pos, err);
+        console.log('Navigator is available!');
+    } else {
+        console.log('Geolocation is not supported by this browser.');
     }
 
     function pos(position) {
@@ -65,7 +61,6 @@ $('#searchbtn').on('click', function () {
         dataType: 'json',
         success: function (data) {
             let data1 = JSON.stringify(data);
-
             console.log(data.results[0].geometry.location.lat);
             console.log(data.results[0].geometry.location.lng);
             let lat = data.results[0].geometry.location.lat;
@@ -87,25 +82,24 @@ function toFahrenheit(c) {
 }
 
 
-var currentMetric = 'c';
+var currentMetric = 'Celsius';
+
 
 $('#convert').on('click', function () {
     let temptext = $('#temp').text();
     let convTemp;
     let temp = parseInt(temptext.replace(/[^0-9\.]/g, ''));
     switch (currentMetric) {
-        case 'c':
+        case 'Celsius':
             convTemp = toFahrenheit(temp);
-            $('#temp').html('Temperature: ' + convTemp + ' Fahrenheit');
-            currentMetric = 'f';
+            currentMetric = 'Fahrenheit';
             break;
-
-        case 'f':
+        case 'Fahrenheit':
             convTemp = toCelsius(temp);
-            $('#temp').html('Temperature: ' + convTemp + ' Celsius');
-            currentMetric = 'c';
+            currentMetric = 'Celsius';
             break;
     }
+    $('#temp').html('Temperature: ' + convTemp + ' ' + currentMetric);
 })
 
 
@@ -116,8 +110,6 @@ function getWeather(lat, lon) {
         method: 'GET',
         dataType: 'json',
         success: function (data) {
-            console.log(data);
-            // let wicon = data.currently.icon;
             let cityName = data.timezone;
             let cw = [
                 cityName,
@@ -138,11 +130,11 @@ function getWeather(lat, lon) {
 function updateValues(s, t, p, h, i, w) {
     let b;
     console.log('Updating values...');
+    loadIcons(i);
     $('#weatherStatus').html('Weather: ' + s);
     $('#temp').html('Temperature: ' + t + ' Celcius');
     $('#pressure').html('Pressure: ' + p + ' Hectopascals');
     $('#humidity').html('Humidity: ' + h + '%');
-    console.log(typeof (w) + w);
     switch (true) {
         case w >= 0 && w <= 0.3:
             b = 0;
@@ -184,75 +176,87 @@ function updateValues(s, t, p, h, i, w) {
             b = 12;
             break;
     }
+
+
     $('#wind').html('Wind: ' + b + ' Beaufort');
-    $('canvas').attr('id', i);
+
+
+    var background;
+
+
     switch (i) {
         case "clear-day":
-            $('body').css('background', 'url(' + clearimg + ')');
+            background = clearimg;
             break;
         case "partly-cloudy-day":
-            $('body').css('background', 'url(' + partcloudimg + ')');
+            background = partcloudimg;
 
             break;
         case "clear-night":
-            $('body').css('background', 'url(' + clearnightimg + ')');
+            background = clearnightimg;
             break;
         case "partly-cloudy-night":
-            $('body').css('background', 'url(' + partcloudnightimg + ')');
+            background = partcloudnightimg;
             break;
         case "cloudy":
-            $('body').css('background', 'url(' + cloudimg + ')');
+            background = cloudimg;
             break;
         case "rain":
-            $('body').css('background', 'url(' + rainimg + ')');
+            background = rainimg;
             break;
         case "sleet":
-            $('body').css('background', 'url(' + sleetimg + ')');
+            background = sleetimg;
             break;
         case "snow":
-            $('body').css('background', 'url(' + snowimg + ')');
+            background = snowimg;
             break;
         case "wind":
-            $('body').css('background', 'url(' + windimg + ')');
+            background = windimg;
             break;
         case "fog":
-            $('body').css('background', 'url(' + fogimg + ')');
+            background = fogimg;
             break;
 
         default:
             break;
     }
-    loadIcons();
+
+
+    $('body').css({
+        'background': 'url(' + background + ')',
+        'background-repeat': 'no-repeat',
+        'background-size': 'cover',
+    });
+
+
     console.log('Update succesful.');
 }
 
 
-function loadIcons() {
+function loadIcons(i) {
     console.log('Loading Dark Sky Icons');
-    var icons = new Skycons(),
-        list = [
-            "clear-day", "clear-night", "partly-cloudy-day",
-            "partly-cloudy-night", "cloudy", "rain", "sleet", "snow", "wind",
-            "fog"
-        ],
-        i;
-    for (i = 0; i < list.length; i++) {
-        icons.set(list[i], list[i]);
-        icons.play();
-    }
+
+    list = [
+        "clear-day", "clear-night", "partly-cloudy-day",
+        "partly-cloudy-night", "cloudy", "rain", "sleet", "snow", "wind",
+        "fog"
+    ];
+
+    var icons = new Skycons({
+        "color": 'black'
+    });
+    icons.set("iconz", i);
+    icons.play();
 }
 
 
 function getCityName(lat, lng) {
     var res;
-    console.log('STARTING API');
     $.ajax({
         type: 'GET',
         dataType: "json",
         url: "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&sensor=false",
         success: function (data) {
-            console.log(data);
-            console.log(data.results[1].formatted_address);
             res = [data.results[0].address_components[3].long_name];
             $('#geocode').html(res[0]);
         },
