@@ -6,8 +6,19 @@ body {
     font-size: 2em;
 }
 
-.allTemp {
-    display: flex;
+.temp {
+    margin-top: 5px;
+    font-size: 2.8em;
+}
+
+#geocode {
+    /* margin-top: 50px; */
+}
+
+#iconz {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto;
 }
 
 .temp {
@@ -24,17 +35,17 @@ div[class*="col"] {
 }
 
 #maincontainer {
-    display: flex;
+    /* display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; */
+    /* align-items: center; */
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 70%;
     background: rgba(255, 255, 255, 0.6);
     border-radius: 80px;
+    text-align: center;
 }
 
 .fullscreen-bg {
@@ -59,4 +70,61 @@ div[class*="col"] {
     width: 100vw;
     height: 100vh;
     background: rgba(0, 0, 0, 0);
+}
+
+.hum,
+.windz,
+.pres {
+    display: flex;
+    /* border: 1px solid black; */
+}
+
+.ic {
+    margin-top: 7px;
+    margin-right: 10px;
+}
+
+.info {
+    display: flex;
+    justify-content: center;
+    justify-content: space-evenly;
+    font-size: 0.7em;
+}
+
+#searchbtn,
+#convert {
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+#searchbtn:hover {
+    background-color: lightgreen;
+}
+
+#convert:hover {
+    background-color: lightskyblue;
+}
+
+#searchbtn {
+    background-color: green;
+}
+
+#convert {
+    background-color: blue;
+}
+
+#inputf {
+    width: 300px;
+    margin: 25px 100px 25px 100px;
+}
+
+#weatherStatus {
+    margin-bottom: 25px;
 }

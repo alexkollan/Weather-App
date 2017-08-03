@@ -1,24 +1,19 @@
 const geoCodingAPIKey = 'AIzaSyC89vZacLzYOG4xGOt1ujzc4MhkDq9V4jo';
-const reverseGeocodingAPI = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
-const weatherApiKEY = "22e1275124fe1f69deb85fd3eec13269";
+const reverseGeocodingAPI = 'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/geocode/json?address=';
 const weatherApiKEY2 = "0da836bc8e23ae08584f8226d080b1dd";
-const currentWeatherAPI2 = "https://crossorigin.me/https://api.darksky.net/forecast/";
-const currentWeatherAPI = 'http://api.openweathermap.org/data/2.5/weather?lat=';
-const currentWeatherApiByName = 'http://api.openweathermap.org/data/2.5/weather?q=';
-const weatherOptions = '&units=metric&appid=';
-const weatherIcon = 'http://openweathermap.org/img/w/'
-const clearimg = 'http://res.cloudinary.com/dtmkqsnpm/image/upload/v1501256167/sunny_iyyhjn.jpg';
-const clearnightimg = 'http://res.cloudinary.com/dtmkqsnpm/image/upload/v1501256166/calm-night_dycrwx.jpg';
-const rainimg = 'http://res.cloudinary.com/dtmkqsnpm/image/upload/v1501256167/thunderstorm_o9q6ed.jpg';
-const partcloudimg = 'http://res.cloudinary.com/dtmkqsnpm/image/upload/v1501256647/sky-1365325_1920_xlxedp.jpg';
-const partcloudnightimg = 'http://res.cloudinary.com/dtmkqsnpm/image/upload/v1501256703/moon-1833172_1920_bhbhkj.jpg';
-const cloudimg = 'http://res.cloudinary.com/dtmkqsnpm/image/upload/v1501256933/storm-clouds-426271_1920_ze8kvp.jpg';
-const sleetimg = 'http://res.cloudinary.com/dtmkqsnpm/image/upload/v1501257061/hailstones-on-window-pane-1354038_1920_delqdr.jpg';
-const windimg = 'http://res.cloudinary.com/dtmkqsnpm/image/upload/v1501256168/windy_tt4ypx.jpg';
-const snowimg = 'http://res.cloudinary.com/dtmkqsnpm/image/upload/v1501257195/snowflake-554635_1920_l7ymyp.jpg';
-const fogimg = 'http://res.cloudinary.com/dtmkqsnpm/image/upload/v1501257293/foggy-2091573_1920_qdv2j9.jpg';
+const currentWeatherAPI2 = "https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/";
+const clearimg = 'https://res.cloudinary.com/dtmkqsnpm/image/upload/v1501256167/sunny_iyyhjn.jpg';
+const clearnightimg = 'https://res.cloudinary.com/dtmkqsnpm/image/upload/v1501256166/calm-night_dycrwx.jpg';
+const rainimg = 'https://res.cloudinary.com/dtmkqsnpm/image/upload/v1501256167/thunderstorm_o9q6ed.jpg';
+const partcloudimg = 'https://res.cloudinary.com/dtmkqsnpm/image/upload/v1501256647/sky-1365325_1920_xlxedp.jpg';
+const partcloudnightimg = 'https://res.cloudinary.com/dtmkqsnpm/image/upload/v1501256703/moon-1833172_1920_bhbhkj.jpg';
+const cloudimg = 'https://res.cloudinary.com/dtmkqsnpm/image/upload/v1501256933/storm-clouds-426271_1920_ze8kvp.jpg';
+const sleetimg = 'https://res.cloudinary.com/dtmkqsnpm/image/upload/v1501257061/hailstones-on-window-pane-1354038_1920_delqdr.jpg';
+const windimg = 'https://res.cloudinary.com/dtmkqsnpm/image/upload/v1501256168/windy_tt4ypx.jpg';
+const snowimg = 'https://res.cloudinary.com/dtmkqsnpm/image/upload/v1501257195/snowflake-554635_1920_l7ymyp.jpg';
+const fogimg = 'https://res.cloudinary.com/dtmkqsnpm/image/upload/v1501257293/foggy-2091573_1920_qdv2j9.jpg';
 
-$(function () {
+$(function() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(pos, err);
         console.log('Navigator is available!');
@@ -53,13 +48,13 @@ $(function () {
 })
 
 
-$('#searchbtn').on('click', function () {
+$('#searchbtn').on('click', function() {
     let cityName = $('#inputf').val();
     $.ajax({
         url: reverseGeocodingAPI + cityName + '&key=' + geoCodingAPIKey,
         method: 'GET',
         dataType: 'json',
-        success: function (data) {
+        success: function(data) {
             let data1 = JSON.stringify(data);
             console.log(data.results[0].geometry.location.lat);
             console.log(data.results[0].geometry.location.lng);
@@ -82,24 +77,24 @@ function toFahrenheit(c) {
 }
 
 
-var currentMetric = 'Celsius';
+var currentMetric = ' °C';
 
 
-$('#convert').on('click', function () {
+$('#convert').on('click', function() {
     let temptext = $('#temp').text();
     let convTemp;
     let temp = parseInt(temptext.replace(/[^0-9\.]/g, ''));
     switch (currentMetric) {
-        case 'Celsius':
+        case ' °C':
             convTemp = toFahrenheit(temp);
-            currentMetric = 'Fahrenheit';
+            currentMetric = ' °F';
             break;
-        case 'Fahrenheit':
+        case ' °F':
             convTemp = toCelsius(temp);
-            currentMetric = 'Celsius';
+            currentMetric = ' °C';
             break;
     }
-    $('#temp').html('Temperature: ' + convTemp + ' ' + currentMetric);
+    $('#temp').html(convTemp + ' ' + currentMetric);
 })
 
 
@@ -109,7 +104,8 @@ function getWeather(lat, lon) {
         url: currentWeatherAPI2 + weatherApiKEY2 + '/' + lat + ',' + lon,
         method: 'GET',
         dataType: 'json',
-        success: function (data) {
+        mode: 'no-cors',
+        success: function(data) {
             let cityName = data.timezone;
             let cw = [
                 cityName,
@@ -131,10 +127,10 @@ function updateValues(s, t, p, h, i, w) {
     let b;
     console.log('Updating values...');
     loadIcons(i);
-    $('#weatherStatus').html('Weather: ' + s);
-    $('#temp').html('Temperature: ' + t + ' Celcius');
-    $('#pressure').html('Pressure: ' + p + ' Hectopascals');
-    $('#humidity').html('Humidity: ' + h + '%');
+    $('#weatherStatus').html(s);
+    $('#temp').html(t + ' °C');
+    $('#pressure').html(p + ' hPa');
+    $('#humidity').html(h + '%');
     switch (true) {
         case w >= 0 && w <= 0.3:
             b = 0;
@@ -178,7 +174,7 @@ function updateValues(s, t, p, h, i, w) {
     }
 
 
-    $('#wind').html('Wind: ' + b + ' Beaufort');
+    $('#wind').html(b);
 
 
     var background;
@@ -255,12 +251,12 @@ function getCityName(lat, lng) {
     $.ajax({
         type: 'GET',
         dataType: "json",
-        url: "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&sensor=false",
-        success: function (data) {
+        url: "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&sensor=false",
+        success: function(data) {
             res = [data.results[0].address_components[3].long_name];
             $('#geocode').html(res[0]);
         },
-        error: function () {
+        error: function() {
             console.log('error');
         }
     });
