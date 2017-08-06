@@ -217,13 +217,7 @@ function updateValues(s, t, p, h, i, w) {
             break;
     }
 
-
-    $('body').css({
-        'background': 'url(' + background + ')',
-        'background-repeat': 'no-repeat',
-        'background-size': 'cover',
-    });
-
+    $('#bgimg').attr('src', background);
 
     console.log('Update succesful.');
 }

@@ -1,18 +1,23 @@
 @import url('https://fonts.googleapis.com/css?family=Bree+Serif');
 body {
-    /* background: black; */
     color: black;
     font-family: 'Bree Serif', serif;
     font-size: 2em;
+    min-height: 100%;
+    overflow: hidden;
+}
+
+#bgimg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
 }
 
 .temp {
     margin-top: 5px;
     font-size: 2.8em;
-}
-
-#geocode {
-    /* margin-top: 50px; */
 }
 
 #iconz {
@@ -35,10 +40,6 @@ div[class*="col"] {
 }
 
 #maincontainer {
-    /* display: flex;
-    flex-direction: column;
-    justify-content: center; */
-    /* align-items: center; */
     position: absolute;
     top: 50%;
     left: 50%;
@@ -46,18 +47,7 @@ div[class*="col"] {
     background: rgba(255, 255, 255, 0.6);
     border-radius: 80px;
     text-align: center;
-}
-
-.fullscreen-bg {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    z-index: -100;
+    width: 90%;
 }
 
 .cover {
@@ -76,7 +66,6 @@ div[class*="col"] {
 .windz,
 .pres {
     display: flex;
-    /* border: 1px solid black; */
 }
 
 .ic {
@@ -95,13 +84,14 @@ div[class*="col"] {
 #convert {
     border: none;
     color: white;
-    padding: 15px 32px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 4px 2px;
     cursor: pointer;
+    min-height: 50px;
+    min-width: 100px;
+    margin-bottom: 50px;
 }
 
 #searchbtn:hover {
@@ -121,10 +111,17 @@ div[class*="col"] {
 }
 
 #inputf {
-    width: 300px;
-    margin: 25px 100px 25px 100px;
+    width: 69%;
+    margin: 20px auto;
 }
 
 #weatherStatus {
     margin-bottom: 25px;
+}
+
+@media (min-width: 992px) {
+    #maincontainer {
+        width: 50%;
+        padding-top: 43px;
+    }
 }
